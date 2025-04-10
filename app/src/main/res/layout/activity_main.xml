@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:layout_marginTop="12dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+
+    <EditText
+        android:id="@+id/rtspUrlInput"
+        android:hint="Enter RTSP URL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/playButton"
+        android:text="Play Stream"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/rtspUrlInput"
+        android:layout_alignParentStart="true"
+        android:layout_margin="5dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/purple"
+
+        />
+
+    <Button
+        android:id="@+id/PipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rtspUrlInput"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"
+        android:layout_marginTop="8dp"
+        android:text="Pop out"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/purple"
+        />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/RecordButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/playButton"
+        android:layout_margin="5dp"
+        android:layout_marginStart="263dp"
+android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="262dp"
+        android:text="Record"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/purple"
+        />
+
+    <org.videolan.libvlc.util.VLCVideoLayout
+        android:id="@+id/videoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/RecordButton"
+        />
+
+
+    <Button
+        android:id="@+id/AbortBtn"
+        android:text=" Abort Stream"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_alignParentBottom="true"
+      android:layout_centerHorizontal="true"
+
+        />
+
+</RelativeLayout>
