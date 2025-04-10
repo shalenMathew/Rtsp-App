@@ -18,7 +18,7 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
-    /*  MAIN BRANCH */
+    /*  SAVEING VIDEO IN GALLERY  BRANCH */
 
     private lateinit var libVLC: LibVLC
     private lateinit var mediaPlayer: MediaPlayer
