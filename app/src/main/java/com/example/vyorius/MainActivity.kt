@@ -1,6 +1,5 @@
 package com.example.vyorius
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -8,17 +7,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.example.vyorius.databinding.ActivityMainBinding
+import com.google.android.material.button.MaterialButton
 import org.videolan.libvlc.LibVLC
 import org.videolan.libvlc.Media
 import org.videolan.libvlc.MediaPlayer
 import org.videolan.libvlc.util.VLCVideoLayout
-import androidx.core.net.toUri
-import com.google.android.material.button.MaterialButton
-import org.videolan.libvlc.interfaces.IMedia.Type.File
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+
+    /*  MAIN BRANCH */
 
     private lateinit var libVLC: LibVLC
     private lateinit var mediaPlayer: MediaPlayer
