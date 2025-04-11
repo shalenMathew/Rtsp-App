@@ -1,8 +1,10 @@
 package com.example.vyorius
 
 import android.Manifest
+import android.app.PictureInPictureParams
 import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.Bundle
@@ -10,6 +12,7 @@ import android.os.Environment
 import android.os.StrictMode
 import android.provider.MediaStore
 import android.util.Log
+import android.util.Rational
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -21,7 +24,6 @@ import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.example.vyorius.databinding.ActivityMainBinding
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.progressindicator.CircularProgressIndicator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var currentRecordingFile: File
     private lateinit var progressBar: ProgressBar
+    private lateinit var popOut: Button
     var isRecording = false
     var isPlaying = false
 
@@ -65,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         val abortBtn = binding.AbortBtn
         val recordBtn = binding.RecordButton
         progressBar = binding.progressBar
-
+        popOut = binding.PipButton
 
         lifecycleScope.launch(Dispatchers.Default) {
 
@@ -80,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                 this@MainActivity.recordPlayer = recordPlayer
 
                 setUpListeners()
-                setUpBtnClicks(playBtn,abortBtn,recordBtn)
+                setUpBtnClicks(playBtn,abortBtn,recordBtn,popOut)
 
             }
 
@@ -103,7 +106,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setUpBtnClicks(playBtn: Button, abortBtn: Button, recordBtn: MaterialButton) {
+    private fun setUpBtnClicks(
+        playBtn: Button,
+        abortBtn: Button,
+        recordBtn: MaterialButton,
+        popOut: Button
+    ) {
 
         playBtn.setOnClickListener {
 
@@ -170,6 +178,19 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
+            }
+
+        }
+
+        popOut.setOnClickListener {
+
+            if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+
+                val pip = PictureInPictureParams.Builder()
+                    .setAspectRatio(Rational(16,9))
+                    .build()
+
+                enterPictureInPictureMode(pip)
             }
 
         }
@@ -264,12 +285,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
-
-
         }
-
-
-
 
     }
 
@@ -400,6 +416,33 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer.detachViews()
         recordPlayer.release()
         libVLC.release()
+    }
+
+    override fun onPictureInPictureModeChanged(
+        isInPictureInPictureMode: Boolean,
+        newConfig: Configuration
+    ) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+
+        if (isInPictureInPictureMode){
+
+            binding.rtspUrlInput.visibility = View.GONE
+            binding.playButton.visibility = View.GONE
+            binding.PipButton.visibility = View.GONE
+            binding.RecordButton.visibility = View.GONE
+            binding.AbortBtn.visibility = View.GONE
+
+
+        }else{
+
+            binding.rtspUrlInput.visibility = View.VISIBLE
+            binding.playButton.visibility = View.VISIBLE
+            binding.PipButton.visibility = View.VISIBLE
+            binding.RecordButton.visibility = View.VISIBLE
+            binding.AbortBtn.visibility = View.VISIBLE
+
+        }
+
     }
 
 }
